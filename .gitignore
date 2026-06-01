@@ -1,0 +1,28 @@
+# Virtual environment
+venv/
+.venv/
+env/
+ENV/
+
+# Python cache and compiled files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Deep Learning / Model Checkpoints
+checkpoints/*.pth
+checkpoints/*.pt
+checkpoints/*.h5
+checkpoints/*.onnx
+
+# Datasets / Large media
+data/train/
+data/val/
+data/test/
+
+# OS specific files
+.DS_Store
+Thumbs.db
