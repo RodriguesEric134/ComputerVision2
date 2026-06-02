@@ -1,11 +1,11 @@
                     precision    recall  f1-score   support
 
-at_risk_vegetation       1.00      1.00      1.00        30
-       burned_land       1.00      1.00      1.00        30
-             smoke       1.00      1.00      1.00        30
+at_risk_vegetation       0.84      0.81      0.82       150
+       burned_land       0.82      0.84      0.83       150
+             smoke       0.99      1.00      0.99       150
 
-          accuracy                           1.00        90
-         macro avg       1.00      1.00      1.00        90
-      weighted avg       1.00      1.00      1.00        90
+          accuracy                           0.88       450
+         macro avg       0.88      0.88      0.88       450
+      weighted avg       0.88      0.88      0.88       450
 
-Acurácia Geral de Teste: 100.00%
+Acurácia Geral de Teste: 88.22%

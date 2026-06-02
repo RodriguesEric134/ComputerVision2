@@ -132,6 +132,10 @@ def predict_image(image, model, classes):
     predicted_class = classes[predicted_idx]
     confidence = probabilities[predicted_idx]
     
+    # Filtro de confiança mínima para detecção de fora-de-domínio (ex: cachorros, carros)
+    if confidence < 0.70:
+        predicted_class = 'unknown'
+        
     return predicted_class, confidence, probabilities
 
 # --- CONFIGURAÇÃO DA BARRA LATERAL (SIDEBAR) ---
@@ -182,7 +186,8 @@ with col2:
         class_mapping = {
             'smoke': 'Smoke (Fumaca)',
             'burned_land': 'Burned Land (Area Queimada)',
-            'at_risk_vegetation': 'At-Risk Vegetation (Vegetacao preservada)'
+            'at_risk_vegetation': 'At-Risk Vegetation (Vegetacao preservada)',
+            'unknown': 'Unknown (Desconhecido / Fora do Dominio)'
         }
         
         display_name = class_mapping.get(predicted_class, predicted_class)
@@ -197,6 +202,8 @@ with col2:
             st.markdown('<div class="result-alert alert-warning">AVISO: Cicatriz de queimada severa detectada. Solo degradado.</div>', unsafe_allow_html=True)
         elif predicted_class == 'at_risk_vegetation':
             st.markdown('<div class="result-alert alert-success">STATUS NORMAL: Area sob monitoramento preventivo. Cobertura vegetal conservada.</div>', unsafe_allow_html=True)
+        elif predicted_class == 'unknown':
+            st.markdown('<div class="result-alert" style="background-color: rgba(113, 113, 122, 0.08); border: 1px solid rgba(113, 113, 122, 0.3); color: #71717a;">RETORNO ANOMALO: Imagem fora do dominio de monitoramento florestal ou de baixa confianca.</div>', unsafe_allow_html=True)
             
         st.markdown('<div class="section-divider"></div>', unsafe_allow_html=True)
         st.write("**Probabilidade por Classe:**")

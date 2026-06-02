@@ -84,6 +84,12 @@ ALERT_MAPPING = {
         'severity': 'NENHUMA (ROTINA)',
         'description': 'Vegetação sob monitoramento preventivo. Sem assinaturas de combustão visual.',
         'rpa_trigger_action': 'CONTINUAR_MONITORAMENTO'
+    },
+    'unknown': {
+        'level': 'CINZA',
+        'severity': 'DESCONHECIDA',
+        'description': 'Retorno espectral anômalo ou imagem fora do domínio de monitoramento (baixa confiança).',
+        'rpa_trigger_action': 'REQUISITAR_ANALISE_MANUAL'
     }
 }
 
@@ -165,6 +171,10 @@ async def predict(
         predicted_class = classes[predicted_idx]
         confidence = float(probabilities[predicted_idx])
         
+        # Filtro de confiança mínima para detecção de fora-de-domínio (ex: cachorros, carros)
+        if confidence < 0.70:
+            predicted_class = 'unknown'
+            
         # Estruturação do dicionário de probabilidades de todas as classes
         class_probabilities = {classes[i]: float(probabilities[i]) for i in range(len(classes))}
         

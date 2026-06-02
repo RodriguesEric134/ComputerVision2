@@ -42,6 +42,9 @@ Identificamos os seguintes desafios clássicos em imagens de satélite de média
 2.  **Instabilidade de Gradiente (Treinamento Lento / Divergência)**:
     *   *Mitigação*: Uso de **Batch Normalization (BatchNorm2d)** após cada operação de convolução nas duas redes. O BatchNorm estabiliza a distribuição das ativações internas, permitindo convergir em menos épocas e tolerar taxas de aprendizado estáveis (`learning_rate=0.001`).
 
+### C. Filtro de Confiança e Out-of-Distribution (OOD)
+Implementamos um limiar de confiança de **70%** tanto no dashboard Streamlit quanto na API FastAPI. Imagens que não pertencem ao domínio do problema (por exemplo, fotos de animais, pessoas ou objetos não relacionados) ou que possuem baixa assinatura espectral de risco são automaticamente classificadas como **"Desconhecido / Anômalo"**, prevenindo falsos positivos perigosos na detecção de incêndios.
+
 ---
 
 ## 3. Estrutura de Pastas do Repositório
@@ -49,6 +52,7 @@ Identificamos os seguintes desafios clássicos em imagens de satélite de média
 ```text
 ComputerVision/
 ├── data/                       # Diretório reservado para imagens
+│   ├── download_real_data.py   # Script para baixar e limpar o dataset real do Hugging Face
 │   └── generate_dummy_data.py  # Script gerador de dataset sintético (para testes rápidos)
 ├── src/                        # Código Fonte do Módulo de Visão Computacional
 │   ├── dataset.py              # Pré-processamento, Data Augmentation e DataLoaders
@@ -82,12 +86,22 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### Passo 2: Gerar o Dataset de Teste e Validação
-Para que a banca consiga avaliar o pipeline de ponta a ponta sem a necessidade de baixar gigabytes de dados espaciais no primeiro momento, criamos um gerador de imagens sintéticas de exemplo.
+### Passo 2: Obter o Dataset (Real ou Sintético)
+
+Você tem duas opções para alimentar o pipeline de treino e testes:
+
+#### Opção A: Dataset de Imagens Reais (Recomendado para Banca e Produção)
+Para treinar o modelo com imagens aéreas e de satélite reais de alta qualidade do dataset `EdBianchi/SmokeFire` (Hugging Face), execute o script downloader automatizado. Ele baixa os dados em formato Parquet, limpa imagens corrompidas e distribui exatamente 600 imagens para treino, 150 para validação e 150 para teste em cada classe:
+```bash
+python data/download_real_data.py
+```
+
+#### Opção B: Dataset Sintético (Para Testes Rápidos)
+Se quiser apenas testar o código rapidamente sem realizar downloads externos:
 ```bash
 python data/generate_dummy_data.py
 ```
-*Isso gerará 480 imagens de 128x128 pixels sob a pasta `data/` simulando visualmente assinaturas de fumaça, vegetação seca e terras queimadas.*
+*Isso gerará 480 imagens sintéticas de 128x128 pixels sob a pasta `data/` simulando visualmente assinaturas de fumaça, vegetação e terras queimadas.*
 
 ### Passo 3: Treinar os Modelos CNN
 Você pode treinar tanto o modelo rápido (`lite`) quanto o profundo residual (`deep`).
