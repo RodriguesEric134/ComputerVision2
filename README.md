@@ -1,33 +1,43 @@
-# SpaceFire Monitor - Applied Computer Vision (ACV)
-**FIAP Global Solution 2026**  
-*Tema: Indústria Espacial - O Código que Move o Universo*  
-*Curso: Engenharia de Software (4º Ano)*
-
----
-
 ## 1. Visão Geral do Projeto
-O **SpaceFire Monitor** é uma plataforma inteligente e de alta performance voltada ao monitoramento, previsão e resposta a focos de incêndios florestais usando dados espectrais e espaciais de satélites/drones. 
 
-Esta entrega representa o **Módulo de Visão Computacional (Applied Computer Vision)** da solução global. Implementamos um pipeline completo em **PyTorch** capaz de receber imagens de satélite e classificá-las em três classes vitais para a conservação e gestão de risco florestal:
-1. **Fumaça (Smoke)**: Detecção imediata de colunas de fumaça ativa.
-2. **Área Queimada (Burned Land)**: Mapeamento de cicatrizes térmicas e solo devastado pós-incêndio.
-3. **Vegetação em Risco / Floresta (At-Risk Vegetation)**: Cobertura florestal saudável sob monitoramento preventivo.
+O Data Burn é uma plataforma inteligente e de alta performance voltada ao monitoramento, previsão e resposta a focos de incêndios florestais usando dados espectrais e espaciais de satélites/drones. 
+
+Implementamos um pipeline completo em **PyTorch** capaz de receber imagens de satélite e classificá-las em três classes para a conservação e gestão de risco florestal:
+
+1. **Fumaça**: Detecção de colunas de fumaça ativa.
+2. **Área Queimada**: Mapeamento de solo escuro e devastado pós-incêndio.
+3. **Vegetação em Risco / Floresta**: Cobertura florestal saudável sob monitoramento preventivo.
 
 A solução está diretamente alinhada com as Metas de Desenvolvimento Sustentável da ONU: **ODS 13 (Ação Climática)**, **ODS 9 (Indústria, Inovação e Infraestrutura)** e **ODS 2 (Preservação de Biomas e Terras Agrícolas)**.
+
+### Integrantes
+* **Bernardo Rocha** - RM99209
+* **Eric Carvalho** - RM550249
+* **Manoella Waideman** - RM98906
+* **Renato Ichikawa** - RM99242
+* **Victor Hugo Andrade** - RM550996
 
 ---
 
 ## 2. Diferenciais Acadêmicos e Engenharia de IA
 
 ### A. Arquiteturas Desenvolvidas 100% Do Zero
-Para cumprir rigorosamente as diretrizes da entrega acadêmica, **é proibido o uso de Transfer Learning / Pesos pré-treinados** (como ResNet, VGG, MobileNet). Desenvolvemos duas arquiteturas autorais em PyTorch sob o arquivo `src/models.py`:
+
+No processo desenvolvemos duas arquiteturas autorais em PyTorch sob o arquivo `src/models.py`:
+
 *   **`FireNet_Lite` (Sequencial Leve)**: CNN clássica com blocos sequenciais `Conv2d` -> `BatchNorm` -> `ReLU` -> `MaxPool2d`. Possui alta velocidade de treinamento e é excelente para inferências rápidas em borda ou hardware de baixo custo.
-*   **`SpaceFire_DeepCNN` (Profunda com Blocos Residuais do Zero)**: Rede robusta de alta performance inspirada na arquitetura ResNet. Desenvolvemos o módulo **`ResidualBlock`** do zero, permitindo conexões residuais de atalho (*shortcuts*) para evitar o desaparecimento de gradiente e forçar a convergência estável em tarefas complexas de textura espectral, ultrapassando facilmente a meta mínima de **88% de acurácia**.
+
+*   **`SpaceFire_DeepCNN` (Profunda com Blocos Residuais do Zero)**: Rede robusta de alta performance inspirada na arquitetura ResNet. Desenvolvemos o módulo
+
+**`ResidualBlock`** do zero, permitindo conexões residuais de atalho (*shortcuts*) para evitar o desaparecimento de gradiente e forçar a convergência estável em tarefas complexas de textura espectral, ultrapassando facilmente a meta mínima de **88% de acurácia**.
 
 ### B. Gestão Acadêmica de Overfitting e Underfitting
+
 Identificamos os seguintes desafios clássicos em imagens de satélite de média/alta resolução e os mitigamos ativamente:
+
 1.  **Overfitting (Decorar Fundos Verdes/Uniforme)**: 
     *   *Mitigação*: Aplicação de **Data Augmentation espacial** severo no carregador (`src/dataset.py`). Como imagens aéreas são invariantes à orientação da gravidade, implementamos `RandomHorizontalFlip(p=0.5)`, `RandomVerticalFlip(p=0.5)` e `RandomRotation(degrees=45)`.
+
     *   *Mitigação*: Inclusão de **Dropout de 40% a 50%** nas camadas totalmente conectadas das redes para forçar o aprendizado distribuído.
 2.  **Instabilidade de Gradiente (Treinamento Lento / Divergência)**:
     *   *Mitigação*: Uso de **Batch Normalization (BatchNorm2d)** após cada operação de convolução nas duas redes. O BatchNorm estabiliza a distribuição das ativações internas, permitindo convergir em menos épocas e tolerar taxas de aprendizado estáveis (`learning_rate=0.001`).
