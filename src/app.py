@@ -140,10 +140,10 @@ def predict_image(image, model, classes):
 
 # --- CONFIGURAÇÃO DA BARRA LATERAL (SIDEBAR) ---
 st.sidebar.title("Data Burn")
-st.sidebar.markdown("Configuracoes da IA")
+st.sidebar.markdown("Configurações da IA")
 
 selected_model = st.sidebar.selectbox(
-    "Modelo de Classificacao:",
+    "Modelo de Classificação:",
     ["deep", "lite"],
     format_func=lambda x: "SpaceFire_DeepCNN (Residual)" if x == "deep" else "FireNet_Lite (Sequencial)"
 )
@@ -158,7 +158,7 @@ else:
 
 # --- CORPO PRINCIPAL ---
 st.markdown('<div class="main-title">Data Burn</div>', unsafe_allow_html=True)
-st.markdown('<div class="sub-title">Applied Computer Vision - Classificacao de Imagens de Satelite</div>', unsafe_allow_html=True)
+st.markdown('<div class="sub-title">Applied Computer Vision - Classificação de Imagens de Satélite</div>', unsafe_allow_html=True)
 
 # Divisão de colunas limpas
 col1, col2 = st.columns([1, 1])
@@ -184,16 +184,16 @@ with col2:
             predicted_class, confidence, probabilities = predict_image(image, model, classes)
             
         class_mapping = {
-            'smoke': 'Smoke (Fumaca)',
-            'burned_land': 'Burned Land (Area Queimada)',
-            'at_risk_vegetation': 'At-Risk Vegetation (Vegetacao preservada)',
-            'unknown': 'Unknown (Desconhecido / Fora do Dominio)'
+            'smoke': 'Fumaça',
+            'burned_land': 'Área Queimada',
+            'at_risk_vegetation': 'Vegetação Preservada',
+            'unknown': 'Desconhecido / Fora do Domínio'
         }
         
         display_name = class_mapping.get(predicted_class, predicted_class)
         
         st.write(f"**Classe identificada:** {display_name}")
-        st.write(f"**Indice de confianca:** {confidence * 100:.2f}%")
+        st.write(f"**Índice de confiança:** {confidence * 100:.2f}%")
         
         # Alertas planos e minimalistas sem emojis
         if predicted_class == 'smoke':
@@ -210,7 +210,7 @@ with col2:
         
         prob_df = pd.DataFrame({
             'Classe': [class_mapping.get(c, c) for c in classes],
-            'Confianca (%)': [p * 100 for p in probabilities]
+            'Confiança (%)': [p * 100 for p in probabilities]
         })
         
         st.bar_chart(prob_df.set_index('Classe'))
