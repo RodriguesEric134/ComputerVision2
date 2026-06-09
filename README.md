@@ -17,6 +17,14 @@ A solução está diretamente alinhada com as Metas de Desenvolvimento Sustentá
 * **Renato Ichikawa** - RM99242
 * **Victor Hugo Andrade** - RM550996
 
+> [!IMPORTANT]
+> ###  Vídeo de Apresentação do Projeto
+> Assista ao pitch de apresentação e à demonstração funcional da plataforma **Data Burn**:
+> 
+> [![Assista ao vídeo](https://img.youtube.com/vi/NpL4_zlQqYU/0.jpg)](https://www.youtube.com/watch?v=NpL4_zlQqYU)
+> 
+> 🔗 **[Clique aqui para assistir no YouTube](https://www.youtube.com/watch?v=NpL4_zlQqYU)**
+
 ---
 
 ## 2. Diferenciais Acadêmicos e Engenharia de IA
