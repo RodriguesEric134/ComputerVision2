@@ -18,12 +18,14 @@ A solução está diretamente alinhada com as Metas de Desenvolvimento Sustentá
 * **Victor Hugo Andrade** - RM550996
 
 > [!IMPORTANT]
-> ###  Vídeo de Apresentação do Projeto
+> ### Vídeo de Apresentação do Projeto
 > Assista ao pitch de apresentação e à demonstração funcional da plataforma **Data Burn**:
 > 
 > [![Assista ao vídeo](https://img.youtube.com/vi/NpL4_zlQqYU/0.jpg)](https://www.youtube.com/watch?v=NpL4_zlQqYU)
 > 
 > 🔗 **[Clique aqui para assistir no YouTube](https://www.youtube.com/watch?v=NpL4_zlQqYU)**
+> 
+> 💡 *Nota: O PowerPoint/apresentação utilizado no vídeo está disponível na pasta [slide/](file:///d:/GS1SEM4ANO/ComputerVision/slide).*
 
 ---
 
@@ -59,20 +61,30 @@ Implementamos um limiar de confiança de **70%** tanto no dashboard Streamlit qu
 
 ```text
 ComputerVision/
+├── checkpoints/                # Pasta gerada pelo treino para salvar pesos (.pth) e histórico (.json)
 ├── data/                       # Diretório reservado para imagens
 │   ├── download_real_data.py   # Script para baixar e limpar o dataset real do Hugging Face
 │   └── generate_dummy_data.py  # Script gerador de dataset sintético (para testes rápidos)
+├── imagens-teste/              # Pasta contendo imagens e testes de predição
+│   ├── imagens usadas/         # Imagens utilizadas nos testes de predição
+│   └── testes/                 # Prints de testes de predição dos modelos
+├── reports/                    # Relatórios técnicos, imagens de matrizes e gráficos de avaliação
+├── requirements.txt            # Dependências oficiais (PyTorch, Streamlit, etc.)
+├── slide/                      # Pasta contendo a apresentação (PowerPoint/PDF) do projeto
 ├── src/                        # Código Fonte do Módulo de Visão Computacional
 │   ├── dataset.py              # Pré-processamento, Data Augmentation e DataLoaders
 │   ├── models.py               # Definição das duas CNNs customizadas (Lite e Deep)
 │   ├── train.py                # Pipeline e loop unificado de treinamento
 │   ├── evaluate.py             # Métricas, Curvas de Treino e Matriz de Confusão
 │   └── app.py                  # Dashboard Web de Demonstração em Streamlit
-├── checkpoints/                # Pasta gerada pelo treino para salvar pesos (.pth) e histórico (.json)
-├── reports/                    # Relatórios técnicos, imagens de matrizes e gráficos de avaliação
-├── requirements.txt            # Dependências oficiais (PyTorch, Streamlit, etc.)
 └── README.md                   # Este guia oficial de entrega
 ```
+
+### 📂 Detalhes Adicionais de Pastas
+*   **`imagens-teste/`**: Contém subpastas organizadas para validação prática dos modelos:
+    *   **`imagens usadas/`**: Pasta com as imagens que foram submetidas aos testes de predição.
+    *   **`testes/`**: Pasta com capturas de tela (*prints*) demonstrando os resultados de predição dos modelos.
+*   **`slide/`**: Contém a apresentação do projeto utilizada no vídeo de demonstração.
 
 ---
 
